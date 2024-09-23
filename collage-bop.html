@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+	<title>Collage-Bop</title>
+
+	<style>
+        :root {
+			--idx: 30;
+		}
+        #eye { 
+            filter: saturate(100) contrast(10000) hue-rotate(180deg);
+        }
+        #grayson { 
+            filter: saturate(1000) contrast(1) hue-rotate(80deg);
+        }
+        .dragme {
+            position: relative;
+            width: 300px;
+            cursor: move;
+        }
+
+        #draggable {
+            background-color: #ccc;
+            border: 1px solid #000;
+        }
+
+
+
+	</style>
+
+	<script>
+
+        function startDrag(e) {
+            // determine event object
+            if (!e) {
+                var e = window.event;
+            }
+            if(e.preventDefault) e.preventDefault();
+
+            // IE uses srcElement, others use target
+            targ = e.target ? e.target : e.srcElement;
+
+            if (targ.className != 'dragme') {return};
+            // calculate event X, Y coordinates
+                offsetX = e.clientX;
+                offsetY = e.clientY;
+
+            // assign default values for top and left properties
+            if(!targ.style.left) { targ.style.left='0px'};
+            if (!targ.style.top) { targ.style.top='0px'};
+
+            // calculate integer values for top and left 
+            // properties
+            coordX = parseInt(targ.style.left);
+            coordY = parseInt(targ.style.top);
+            drag = true;
+
+            // move div element
+                document.onmousemove=dragDiv;
+            return false;
+
+        }
+        function dragDiv(e) {
+            if (!drag) {return};
+            if (!e) { var e= window.event};
+            // var targ=e.target?e.target:e.srcElement;
+            // move div element
+            targ.style.left=coordX+e.clientX-offsetX+'px';
+            targ.style.top=coordY+e.clientY-offsetY+'px';
+            return false;
+        }
+        function stopDrag() {
+            drag=false;
+        }
+        function resize(e){
+            if (!e) {
+                var e = window.event;
+            }
+            if(e.preventDefault) e.preventDefault();
+
+            // IE uses srcElement, others use target
+            targ = e.target ? e.target : e.srcElement;
+
+            if (targ.className != 'dragme') {return};
+
+            if(!targ.style.width) { targ.style.width='300px'};
+
+            if (e.deltaY > 0){
+                console.log(targ.style.width);
+                targ.style.width = parseInt(targ.style.width) * 1.1 + "px";
+            }
+            else{
+                targ.style.width = parseInt(targ.style.width) * 0.9 + "px";
+            }
+                
+
+
+                
+        }
+        window.onload = function() {
+            document.onmousedown = startDrag;
+            document.onmouseup = stopDrag;
+            document.onwheel = resize;
+        }
+
+        function setImgSrc(){
+            let id = document.querySelector(":root");
+        	let stle = window.getComputedStyle(id);
+			let idx = parseFloat(stle.getPropertyValue("--idx"));
+            console.log(idx)
+
+            var img = document.getElementById("grayson");
+            img.src = "media/grayson/" + idx + ".png";
+
+            var img = document.getElementById("eye");
+            img.src = "media/eyes/" + idx + ".png";
+            
+
+            if (idx == 76) {
+                idx = -1
+            }
+
+            var r = document.querySelector(':root');
+            r.style.setProperty('--idx', idx + 1);
+        }
+
+
+        setInterval(setImgSrc, 100);
+
+	</script>
+
+</head>
+
+<body>
+
+	<div>
+		<h1>Collage-Bop</h1>
+
+		
+        <img id = "grayson" src="media/grayson/30.png" width = 100% class="dragme"></img>
+        
+		
+        <img id = "eye" src="media/eyes/30.png" width = 100% class="dragme"></img>
+		
+	</div>
+
+</body>
+</html>

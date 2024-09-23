@@ -1,0 +1,49 @@
+<!-- index.html File  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- CSS file -->
+    <style>
+        #div_iframe {
+        border-style: inset;
+        border-color: grey;
+        overflow: scroll;
+        height: 500px;
+        width: 90%
+        }
+
+        #frame {
+        width: 100%;
+        height: 1000%;   /* 10x the div height to embrace the whole page */
+    }
+    </style>
+    <title>Draggable Element</title>
+    
+</head>
+
+<body>
+        <div id="div_iframe">
+            <iframe id = 'frame' src="https://www.youtube.com/embed/sP5ElraFHHE?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1" allow="autoplay"></iframe>
+        </div>
+    </div>
+    <script>
+        setInterval(openIframeInNewWindow, 1000000);
+        function openIframeInNewWindow() {
+        const iframe = document.getElementById('frame');
+        if (iframe) {
+            const iframeSrc = iframe.src;
+            const screenWidth = window.screen.availWidth;
+            const screenHeight = window.screen.availHeight;
+            const winWidth = screenWidth / 4;
+            const winHeight = screenHeight / 4;
+            const winX = 100;
+            const winY = 100;
+            winProps = '[popup=true, toolbar=false, menubar=false, width=' + winWidth + ', height=' + winHeight + ', screenY=' + screenWidth / 2 + ', screenX=' + winX + ']';
+            window.open(iframeSrc, '_blank', winProps); 
+        }
+        }
+        
+        
+    </script>
+    
+</body>

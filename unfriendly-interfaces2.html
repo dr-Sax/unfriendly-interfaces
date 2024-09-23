@@ -1,0 +1,73 @@
+<!-- index.html File  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- CSS file -->
+    <style>
+        /* style.css File  */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: azure;
+        }
+
+        .container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            min-height: 2rem;
+            width: 15rem;
+            padding: 10px;
+            background-color: rgb(218, 255, 194);
+            border-radius: 5px;
+            transform: translate(-50%, -50%);
+            cursor: move;
+            user-select: none;
+        }
+
+        .container header {
+            font-weight: 600;
+            text-transform: uppercase;
+            border-bottom: 1px solid black;
+        }
+
+        .draggable-container {
+            margin: 10px 0;
+        }
+    </style>
+    <title>Draggable Element</title>
+</head>
+
+<body>
+    <div class="container">
+        <header>Draggable element</header>
+        <div class="draggable-container">
+            <iframe id="one-one" src="https://en.wikipedia.org/wiki/Main_Page"></iframe>
+        </div>
+    </div>
+    <script>
+
+        // script.js File 
+        const container = document.querySelector(".container");
+        function onMouseDrag({ movementX, movementY }) {
+            let getContainerStyle = window.getComputedStyle(container);
+            let leftValue = parseInt(getContainerStyle.left);
+            let topValue = parseInt(getContainerStyle.top);
+            container.style.left = `${leftValue + movementX}px`;
+            container.style.top = `${topValue + movementY}px`;
+        }
+        container.addEventListener("mousedown", () => {
+            container.addEventListener("mousemove", onMouseDrag);
+        });
+        document.addEventListener("mouseup", () => {
+            container.removeEventListener("mousemove", onMouseDrag);
+        });
+    </script>
+</body>
